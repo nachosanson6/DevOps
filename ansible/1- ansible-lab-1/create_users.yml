@@ -1,0 +1,11 @@
+- name: Create Users
+  hosts:
+    - webserver1 
+    - webserver2
+  become: yes
+  tasks:
+    - name: Create nacho users
+      user:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ users }}"

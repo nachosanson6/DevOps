@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eloy-app-client-deploy
+  labels:
+    app: eloy-app-client
+  namespace: eloy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eloy-app-client
+  template:
+    metadata:
+      name: eloy-app-client
+      labels:
+        app: eloy-app-client
+    spec:
+      containers:
+        - name: eloy-app-client
+          image: sanson6/eloy-app:client
+          ports:
+            - containerPort: 5173
+          env: 
+            - name: VITE_API_URL
+              value: http://172.178.95.66:30009

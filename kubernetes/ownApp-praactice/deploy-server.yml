@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eloy-app-server-deploy
+  labels:
+    app: eloy-app-server
+  namespace: eloy-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eloy-app-server
+  template:
+    metadata:
+      name: eloy-app-server
+      labels:
+        app: eloy-app-server
+    spec:
+      containers:
+        - name: eloy-app-server
+          image: sanson6/eloy-app:server2
+          ports:
+            - containerPort: 5005
+          env: 
+            - name: ORIGIN
+              value: http://172.178.95.66:30008
+
+            - name: MONGODB_URI
+              value: mongodb+srv://sanson6:<password>@cluster0.bj5ctu6.mongodb.net/?retryWrites=true&w=majority

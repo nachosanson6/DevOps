@@ -1,0 +1,18 @@
+- name: Install Apache
+  apt: 
+    name: apache2 
+    state: latest
+    update_cache: yes
+  become: true
+
+- name: Create custom document root
+  file: path={{ doc_root }} state=directory owner=www-data group=www-data
+
+
+- name: Set up HTML file
+  copy: src=index.html dest={{ doc_root }}/index.html owner=www-data group=www-data mode=0644
+
+
+- name: Set up Apache virtual host file
+  template: src=vhost.tpl dest=/etc/apache2/sites-available/000-default.conf
+  notify: Restart apache server
